@@ -1,0 +1,35 @@
+#instal
+
+STEP1: SSH into EC2 and run sudo
+---> sudo sudo
+---> yum install -y
+---> yum install -y wget
+
+STEP2: Download ChefCDK installer for your OS (refer chef documentation)
+-->wget https://packages.chef.io/stable/el/7/chef-server-core-12.10.0-1.el7.x86_64.rpm
+
+STEP3: Install ChefCDK for your OS (refer chef documentation)
+--->rpm -ivh chef-server-core-*.rpm
+---> rpm -qa | grep chef (you can check installed chef using this command)
+
+STEP4: download chef-starter.zip kit from chef.io url (below) and copy it to your workstation's /tmp directory along wiht .pem file
+https://api.chef.io/organizations/rapole/getting_started
+-->ll /tmp
+
+STEP4: From /tmp copy .zip file to root directory using below command and unzip it
+---> cp /tmp/chef-starter.zip chef-starter.zip
+---> yum install -y unzip
+---> unzip chef-starter.zip
+
+STEP5: navigate to chef-repo which is created after above unzip
+---> cd chef-repo
+
+STEP6: copy .pem files from /tmp to 'chef-repo' dir as below, and then change the permissions
+---> cp /tmp/AWSKeyPair.pem AWSKeyPair.pem
+---> chmod 400 AWSKeyPair.pem
+
+STEP7: ssh to chef-Node instance and check if chef package is installed, it shouldn't be
+---> rpmquery chef
+
+
+--->knife bootstrap 18.212.112.110 ---ssh-user-ec2-user --sudo --identity-file AWSKeyPair.pem -N Mynode1
